@@ -24,13 +24,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: packit-service
+  name: release-bot
 spec:
   selector:
-    name: packit-service
-    app: packit
+    name: release-bot
+    app: release-bot
   ports:
-  - name: prod-packit
+  - name: prod-release-bot
     port: 443
     protocol: TCP
     targetPort: 8443

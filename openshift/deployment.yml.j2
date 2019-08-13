@@ -25,29 +25,23 @@ kind: DeploymentConfig
 apiVersion: v1
 metadata:
   labels:
-    app: packit
-    name: packit-service
-  name: packit-service
+    app: release-bot
+    name: release-bot
+  name: release-bot
 spec:
   template:
     metadata:
       labels:
-        name: packit-service
-        app: packit
+        name: release-bot
+        app: release-bot
     spec:
       volumes:
-      - name: packit-secrets
+      - name: release-bot-secrets
         secret:
-          secretName: packit-secrets
-      - name: packit-config
-        secret:
-          secretName: packit-config
-      - name: httpd-conf
-        configMap:
-          name: httpd-conf
+          secretName: release-bot-secrets
       containers:
-        - name: packit-service
-          image: docker.io/usercont/packit-service:master
+        - name: release-bot
+          image: docker.io/marusinm/release-bot:latest
           ports:
           - containerPort: 8443
             protocol: TCP
@@ -57,15 +51,10 @@ spec:
            - name: REDIS_SERVICE_HOST
              value: redis
           volumeMounts:
-          - name: packit-secrets
+          - name: release-bot-secrets
             mountPath: /secrets
-          - name: packit-config
-            mountPath: /home/packit/.config
-          - name: httpd-conf
-            mountPath: /etc/httpd/conf.d/httpd-packit.conf
-            subPath: httpd-packit.conf
           command:
-            - "/usr/bin/run-httpd"
+            - "release-bot -c /secrets/prod/conf.yaml"
           resources:
             requests:
               memory: "128Mi"
@@ -73,24 +62,6 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "200m"
-          # In TLS world, hostname needs to match whatever is set in the cert
-          # in our cause, k8s is doing here something like curl https://172.15.2.4:8443/healthz
-          # which will fail TLS validation.
-          # So we need to connect to prod.packit.dev.
-          #   Liveness probe failed: Get https://10.131.30.42:8443/healthz: local error: tls: no renegotiation
-          # Comment probes out, they just don't work.
-          # readinessProbe:
-          #   httpGet:
-          #     host: {{ deployment }}.packit.dev
-          #     scheme: HTTPS
-          #     path: /healthz
-          #   initialDelaySeconds: 10
-          # livenessProbe:
-          #   httpGet:
-          #     host: {{ deployment }}.packit.dev
-          #     scheme: HTTPS
-          #     path: /healthz
-          #   initialDelaySeconds: 30
   replicas: 1
   strategy:
     type: Recreate

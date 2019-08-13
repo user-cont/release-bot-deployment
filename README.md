@@ -1,4 +1,4 @@
-# Ansible playbooks and scripts for deploying packit-service to Openshift
+# Ansible playbooks and scripts for deploying release-bot to Openshift
 
 ## tl;dr How to deploy
 
@@ -43,12 +43,4 @@ $ cp -av vars/{template,dev}.yml
 And just deploy:
 ```
 $ DEPLOYMENT=dev make deploy
-```
-
-
-### Updating
-
-You don't need to redeploy the whole stack, it is just enough to rollout a new image of the specific component (usually worker):
-```
-$ oc rollout latest dc/packit-service-worker
 ```

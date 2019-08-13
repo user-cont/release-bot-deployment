@@ -25,22 +25,16 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   labels:
-    app: packit
-    name: packit-service
-  name: packit-service
+    app: release-bot
+    name: release-bot
+  name: release-bot
 spec:
-# for local deployment (dev) creates default route for testing.
-# e.g https://packit-service-myproject.127.0.0.1.nip.io/
-# For dev/prod creates host {dev,prod}.packit.dev
-{% if 'dev' != deployment %}
-  host: "{{ deployment }}.packit.dev"
-{% endif %}
   port:
-    targetPort: prod-packit
+    targetPort: prod-release-bot
   to:
     kind: Service
-    name: packit-service
-  tls:
-    # not sure about this one, whether we should do it in httpd or here
-    insecureEdgeTerminationPolicy: Redirect
-    termination: passthrough
+    name: release-bot
+  # tls:
+  #   # not sure about this one, whether we should do it in httpd or here
+  #   insecureEdgeTerminationPolicy: Redirect
+  #   termination: passthrough
