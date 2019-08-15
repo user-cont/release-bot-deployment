@@ -25,7 +25,6 @@
   hosts: localhost
   vars:
     deployment: "{{ lookup('env', 'DEPLOYMENT') }}"
-    sandbox_namespace: "release-bot-{{ deployment }}-sandbox"
     without_fedmsg: false
     without_redis_commander: false
     without_flower: false
@@ -61,7 +60,6 @@
         - "{{ lookup('template', '../openshift/secret-release-bot-secrets.yml.j2') | from_yaml }}"
         - "{{ lookup('template', '../openshift/secret-release-bot-config.yml.j2') | from_yaml }}"
         - "{{ lookup('template', '../openshift/route.release-bot.yml.j2') | from_yaml }}"
-        - "{{ lookup('template', '../openshift/sandbox-namespace.yml.j2') | from_yaml }}"
 
     - name: Deploy resource config - deployment (need to be processed)
       # https://docs.ansible.com/k8s_module.html
@@ -103,6 +101,3 @@
         api_key: "{{ api_key }}"
         verify_ssl: "{{ verify_ssl }}"
       when: not without_flower
-
-    - name: Set up the sandbox namespace
-      command: oc adm -n {{ sandbox_namespace }} policy add-role-to-user edit system:serviceaccount:{{ project }}:default
