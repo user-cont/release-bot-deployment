@@ -7,3 +7,5 @@ vars/*.yml
 secrets/prod
 secrets/dev
 secrets/stg
+
+deploy.retry

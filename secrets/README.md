@@ -4,32 +4,13 @@
 
 ```
 prod
-    │   ├── cert.pem
-    │   ├── chain.pem
-    │   ├── copr
-    │   ├── fedora.keytab
-    │   ├── fullchain.pem
-    │   ├── httpd-packit.conf
-    │   ├── id_rsa
-    │   ├── id_rsa.pub
-    │   ├── packit-service.yaml
-    │   ├── private-key.pem
-    │   ├── privkey.pem
-    │   └── ssh_config
+    │   ├── conf.yaml
+    │   ├── private-key.pema
 ```
 
 Some of them are pre-filled in [template](/secrets/template) directory.
 
 ## What are those secrets?
 
-* Let's encrypt TLS certs:
-    * `cert.pem`
-    * `chain.pem`
-    * `privkey.pem`
+* `conf.yaml` - Configuration for [release-bot](https://github.com/user-cont/release-bot) as a service. See pre-filled template in [templates directory](/secrets/template/conf.yaml) or [example](https://github.com/user-cont/release-bot/blob/master/conf.yaml) from release-bot upstream repository.
 * `private-key` - Specified in a Github App settings. Used to [sign access token requests](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app).
-* `packit-service.yaml` - Configuration for Packit as a service. See pre-filled template in [templates directory](/secrets/template/packit-service.yaml).
-* `ssh_config` - SSH configuration to be able to run fedpkg inside of the OpenShift pod. See pre-filled template in [templates directory](/secrets/template/ssh_config).
-* `id_rsa` and `id_rsa.pub` - SSH keys.
-* `httpd-packit.conf` - Just update `ServerAdmin <ADMIN_EMAIL>` with your email. See pre-filled template in [templates directory](/secrets/template/httpd-packit.conf).
-* `copr` - Your copr credentials where packit will build packages. See pre-filled template in [templates directory](/secrets/template/copr).
-* `fedora.keytab` - Fedora kerberos.
