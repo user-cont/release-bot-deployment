@@ -5,7 +5,7 @@
 ```
 prod
     │   ├── conf.yaml
-    │   ├── private-key.pema
+    │   ├── private-key.pem
 ```
 
 Some of them are pre-filled in [template](/secrets/template) directory.
