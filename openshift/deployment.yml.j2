@@ -39,9 +39,12 @@ spec:
       - name: release-bot-secrets
         secret:
           secretName: release-bot-secrets
+      - name: release-bot-config
+        secret:
+          secretName: release-bot-config
       containers:
         - name: release-bot
-          image: docker.io/marusinm/release-bot:latest
+          image: docker.io/rpitonak/release-bot:latest
           ports:
           - containerPort: 8443
             protocol: TCP
@@ -53,8 +56,10 @@ spec:
           volumeMounts:
           - name: release-bot-secrets
             mountPath: /secrets
+          - name: release-bot-config
+            mountPath: /home/release-bot/.config
           command:
-            - "release-bot -c /secrets/prod/conf.yaml"
+            - "run.sh"
           resources:
             requests:
               memory: "128Mi"
