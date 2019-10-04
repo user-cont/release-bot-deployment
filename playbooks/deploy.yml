@@ -25,16 +25,9 @@
   hosts: all
   vars:
     deployment: "{{ lookup('env', 'DEPLOYMENT') }}"
-    without_fedmsg: false
     without_redis_commander: false
     without_flower: false
   tasks:
-    - name: require ansible 2.7
-      assert:
-        that:
-        - 'ansible_version.minor == 7'
-        fail_msg: 'Please downgrade to ansible 2.7, 2.8 regressed in verify_ssl.'
-
     - name: include variables
       include_vars: ../vars/{{ deployment }}.yml
 
