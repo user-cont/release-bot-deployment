@@ -33,4 +33,4 @@ spec:
   - name: prod-release-bot
     port: 443
     protocol: TCP
-    targetPort: 8443
+    targetPort: 8080
