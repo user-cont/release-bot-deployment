@@ -59,7 +59,7 @@ spec:
           - name: release-bot-config
             mountPath: /home/release-bot/.config
           command:
-            - "run.sh"
+            - "/usr/bin/run.sh"
           resources:
             requests:
               memory: "128Mi"
