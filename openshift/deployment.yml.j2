@@ -44,7 +44,7 @@ spec:
           secretName: release-bot-config
       containers:
         - name: release-bot
-          image: docker.io/rpitonak/release-bot:latest
+          image: usercont/release-bot:{{ deployment }}
           ports:
           - containerPort: 8443
             protocol: TCP
