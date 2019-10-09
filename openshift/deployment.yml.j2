@@ -53,6 +53,8 @@ spec:
              value: {{ deployment }}
            - name: REDIS_SERVICE_HOST
              value: redis
+           - name: CONF_PATH
+             value: /home/release-bot/.config/conf.yaml
           volumeMounts:
           - name: release-bot-secrets
             mountPath: /secrets
