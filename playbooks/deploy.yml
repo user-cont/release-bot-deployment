@@ -48,21 +48,10 @@
         definition: "{{ item }}"
         host: "{{ host }}"
         api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       loop:
         - "{{ lookup('template', '../openshift/secret-release-bot-secrets.yml.j2') | from_yaml }}"
         - "{{ lookup('template', '../openshift/secret-release-bot-config.yml.j2') | from_yaml }}"
-        - "{{ lookup('template', '../openshift/route.release-bot.yml.j2') | from_yaml }}"
-
-    - name: Deploy resource config - deployment (need to be processed)
-      # https://docs.ansible.com/k8s_module.html
-      k8s:
-        namespace: "{{ project }}"
-        definition: "{{ item }}"
-        host: "{{ host }}"
-        api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
-      loop:
         - "{{ lookup('template', '../openshift/deployment.yml.j2') | from_yaml }}"
 
     - name: Deploy resource configs (no need to process them)
@@ -72,25 +61,26 @@
         src: "{{ item }}"
         host: "{{ host }}"
         api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       loop:
         - ../openshift/redis.yml
         - ../openshift/service.yml
+        - ../openshift/route.yml
 
-    - name: Deploy redis-commander.
+    - name: Deploy redis-commander
       k8s:
         namespace: "{{ project }}"
         src: ../openshift/redis-commander.yml
         host: "{{ host }}"
         api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       when: not without_redis_commander
 
-    - name: Deploy flower.
+    - name: Deploy flower
       k8s:
         namespace: "{{ project }}"
         src: ../openshift/flower.yml
         host: "{{ host }}"
         api_key: "{{ api_key }}"
-        verify_ssl: "{{ verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       when: not without_flower

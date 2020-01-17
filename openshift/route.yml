@@ -34,7 +34,3 @@ spec:
   to:
     kind: Service
     name: release-bot
-  # tls:
-  #   # not sure about this one, whether we should do it in httpd or here
-  #   insecureEdgeTerminationPolicy: Redirect
-  #   termination: passthrough
